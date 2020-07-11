@@ -9,19 +9,19 @@ type changeMaxValueType = {
     type: "CHANGE_MAX_VALUE"
     maxValue: number
 }
+// создаем обобщенный тип экшенов
 export type actionsType = changeStartValueType | changeMaxValueType
 
-export const changeStartValue = (newStartValue: number) => {
+export const changeStartValueAC = (newStartValue: number) => {
     return {
         type: CHANGE_START_VALUE,
         startValue: newStartValue
     }
 }
-export const changeMaxValue = (newMaxValue: number) => {
+export const changeMaxValueAC = (newMaxValue: number) => {
     return {
         type: CHANGE_MAX_VALUE,
         maxValue: newMaxValue
     }
 }
 
-export default 1
