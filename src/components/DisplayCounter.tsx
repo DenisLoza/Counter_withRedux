@@ -1,24 +1,41 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import s from "./DisplayCounter.module.css";
 import {ButtonCounter} from "./ButtonCounter";
-import {useSelector} from "react-redux";
-import {rootStateType} from "../store/reducers";
+
 
 export function DisplayCounter(props: any) {
 
-    // с помощью хука useSelector достаем значения из state (Redux) напрямую
-    const startValue = useSelector<rootStateType, number>((state) => state.startValue)
+    // используем хук useState для хранения локального стейта DisplayCounter
+    let startValue = props.startValue
+    let maxValue = props.maxValue
+    let [incValue, setIncValue] = useState(startValue);
+    // let [currentMaxValue, setCurrentMaxValue] = useState(maxValue)
 
-    const addItem =()=> {
-        // code
+    // рендерит компаненту, как только приходит новое значение startValue или setIncValue
+    useEffect(() => {setIncValue(startValue)
+    }, [setIncValue, startValue])
+
+    // текущее значение счетчика увеличивается на 1 при нажатии на кнопку
+    const currentIncValue = () => {
+        incValue < maxValue
+            ? setIncValue(incValue + 1)
+            : setIncValue(incValue)
+
     }
+    // сброс текущего значения счетчика на стартовое значение startValue в глобальном Стэйте
+    const resetValue = () => {
+        setIncValue(startValue)
+    }
+
 
     return (
         <div className={s.DisplayCounter}>
             <div className={s.DisplayCounterView}>
-                <div className={s.count}> {startValue} </div>
+                <div className={s.count}> {incValue} </div>
             </div>
-            <ButtonCounter addItem={addItem}/>
+            <ButtonCounter currentIncValue={currentIncValue}
+                           resetValue={resetValue}
+            />
         </div>
     )
 }
