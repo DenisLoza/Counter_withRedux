@@ -9,15 +9,19 @@ export function DisplayCounter(props: any) {
     let startValue = props.startValue
     let maxValue = props.maxValue
     let errorValue = props.errorValue
+    let onChangeInputValue = props.onChangeInputValue
 
     let [incValue, setIncValue] = useState(startValue);
     let [incErrValue, setIncErrValue] = useState(errorValue);
+    let [incChangeInpValue, setIncChangeInpValue] = useState(onChangeInputValue);
 
     // рендерит компаненту, как только приходит новое значение startValue или setIncValue
     useEffect(() => {setIncValue(startValue)
     }, [setIncValue, startValue])
     useEffect(() => {setIncErrValue(errorValue)
     }, [setIncErrValue, errorValue])
+    useEffect(() => {setIncChangeInpValue(onChangeInputValue)
+    }, [setIncChangeInpValue, onChangeInputValue])
 
 
     // текущее значение счетчика увеличивается на 1 при нажатии на кнопку
@@ -51,22 +55,47 @@ export function DisplayCounter(props: any) {
     let setStyle = {marginTop: "130px", fontSize: "30px" }
     let errStyle = {color: "red", marginTop: "130px", fontSize: "30px" }
 
-return (
-        <div className={s.DisplayCounter}>
-            <div className={s.DisplayCounterView}>
-            {incErrValue
-                ? <div style={errStyle}>INCORRECT VALUE !</div>
-                // ? <div style={setStyle}>ENTER VALUES and PRESS "SET"</div>
-                : <div className={s.count}>
-                    {showErrOrCounter}
+    // УСЛОВИЕ... КАКОЙ JSX ВЫБРОСИТ Ф-ЦИЯ
+    // если из стейта придет значение изменения в инпутах и значение ОШИБКИ на инпутах не будет,
+    // тогда отбрази DisplayNormal
+    if (incChangeInpValue && !incErrValue) {
+        return <DisplayInputValue/>
+    } else {
+        return <DisplayNormal/>
+    }
+
+
+    function DisplayInputValue() {
+        return (
+            <div className={s.DisplayCounter}>
+                <div className={s.DisplayCounterView}>
+                        <div style={setStyle}>ENTER VALUES and PUSH "SET"</div>
                 </div>
-            }
+                <ButtonCounter currentIncValue={currentIncValue}
+                               resetValue={resetValue}
+                               disabledReset={disabledReset}
+                               disabledInc={disabledInc}
+                />
             </div>
-            <ButtonCounter currentIncValue={currentIncValue}
-                           resetValue={resetValue}
-                           disabledReset={disabledReset}
-                           disabledInc={disabledInc}
-            />
-        </div>
-    )
+        )
+    }
+    function DisplayNormal() {
+        return (
+            <div className={s.DisplayCounter}>
+                <div className={s.DisplayCounterView}>
+                    {incErrValue
+                        ? <div style={errStyle}>INCORRECT VALUE !</div>
+                        : <div className={s.count}>
+                            {showErrOrCounter}
+                        </div>
+                    }
+                </div>
+                <ButtonCounter currentIncValue={currentIncValue}
+                               resetValue={resetValue}
+                               disabledReset={disabledReset}
+                               disabledInc={disabledInc}
+                />
+            </div>
+        )
+    }
 }

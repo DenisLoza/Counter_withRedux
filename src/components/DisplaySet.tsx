@@ -7,13 +7,16 @@ export function DisplaySet(props: any) {
     // используем хук useState для хранения локального стейта DisplaySet
     let startValue = props.startValue
     let maxValue = props.maxValue
+    let changeInput = props.changeInput
+
     let [currentStartValue, setCurrentStartValue] = useState(startValue)
     let [currentMaxValue, setCurrentMaxValue] = useState(maxValue)
 
+
+        // проверки на ошибочные значения при вводе
+    let errorValue
     let startValueInputStyle = {}
     let maxValueInputStyle = {}
-        // проверки на ошибочные значения при вводе
-    let errorValue: boolean
     if (currentStartValue < 0) {
         errorValue = true
         startValueInputStyle = {backgroundColor: "salmon"}
@@ -25,21 +28,25 @@ export function DisplaySet(props: any) {
         errorValue = false
     }
 
+
     // отправляем значение ошибки в глобальный стейт
     props.changeErrorValue(errorValue)
 
 
     const setStartValue = (props: any) => {
-        setCurrentStartValue(props.target.value)
+        setCurrentStartValue(+props.target.value)
+        changeInput(true)
     }
     const setMaxValue = (props: any) => {
-        setCurrentMaxValue(props.target.value)
+        setCurrentMaxValue(+props.target.value)
+        changeInput(true)
     }
     const setValue = () => {
         props.changeStartValue(currentStartValue)
         props.changeMaxValue(currentMaxValue)
+        changeInput(false)
     }
-
+    // console.log(currentStartValue, currentMaxValue, errorValue)
 
     return (
         <div className={s.DisplaySet}>

@@ -3,7 +3,7 @@ import './App.css';
 import {DisplaySet} from "./components/DisplaySet";
 import {DisplayCounter} from "./components/DisplayCounter";
 import {useDispatch, useSelector} from "react-redux";
-import {changeErrorValueAC, changeMaxValueAC, changeStartValueAC} from "./store/actions";
+import {changeErrorValueAC, changeInputAC, changeMaxValueAC, changeStartValueAC} from "./store/actions";
 import {rootStateType} from "./store/reducers";
 
 
@@ -23,11 +23,16 @@ function App() {
         const action = changeErrorValueAC(newErrorValue)
         dispatch(action)
     }
+    const changeInput = (newOnChangeInputValue: boolean) => {
+        const action = changeInputAC(newOnChangeInputValue)
+        dispatch(action)
+    }
 
     // с помощью хука useSelector достаем значения из state (Redux) напрямую
     const startValue = useSelector<rootStateType, number>((state) => state.startValue)
     const maxValue = useSelector<rootStateType, number>((state) => state.maxValue)
     const errorValue = useSelector<rootStateType, boolean>((state) => state.errorValue)
+    const onChangeInputValue = useSelector<rootStateType, boolean>((state) => state.onChangeInputValue)
     // const errorValue = useSelector<rootStateType, boolean>((state) => state.errorValue)
 
   return (
@@ -37,11 +42,12 @@ function App() {
                     changeStartValue={changeStartValue}
                     changeMaxValue={changeMaxValue}
                     changeErrorValue={changeErrorValue}
-                    // errorValue={errorValue}
+                    changeInput={changeInput}
         />
         <DisplayCounter startValue={startValue}
                         maxValue={maxValue}
                         errorValue={errorValue}
+                        onChangeInputValue={onChangeInputValue}
         />
       </div>
   );
