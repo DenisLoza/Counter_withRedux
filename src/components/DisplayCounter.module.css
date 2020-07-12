@@ -22,3 +22,6 @@
     border-radius: 10px;
     text-align: center;
 }
+.err {
+    color: red;
+}

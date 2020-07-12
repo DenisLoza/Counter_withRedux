@@ -10,6 +10,24 @@ export function DisplaySet(props: any) {
     let [currentStartValue, setCurrentStartValue] = useState(startValue)
     let [currentMaxValue, setCurrentMaxValue] = useState(maxValue)
 
+    let startValueInputStyle = {}
+    let maxValueInputStyle = {}
+        // проверки на ошибочные значения при вводе
+    let errorValue: boolean
+    if (currentStartValue < 0) {
+        errorValue = true
+        startValueInputStyle = {backgroundColor: "salmon"}
+    } else if (currentMaxValue <= currentStartValue) {
+        errorValue = true
+        maxValueInputStyle = {backgroundColor: "salmon"}
+        startValueInputStyle = {backgroundColor: "salmon"}
+    } else {
+        errorValue = false
+    }
+
+    // отправляем значение ошибки в глобальный стейт
+    props.changeErrorValue(errorValue)
+
 
     const setStartValue = (props: any) => {
         setCurrentStartValue(props.target.value)
@@ -40,15 +58,18 @@ export function DisplaySet(props: any) {
                            type="number"
                            value={currentMaxValue}
                            onChange={setMaxValue}
+                           style={maxValueInputStyle}
                     />
                     <input className={s.input}
                            type="number"
                            value={currentStartValue}
                            onChange={setStartValue}
+                           style={startValueInputStyle}
                     />
                 </div>
             </div>
             <ButtonSet setValue={setValue}
+                       errorValue={errorValue}
             />
         </div>
     )
