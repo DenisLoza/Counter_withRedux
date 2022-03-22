@@ -1,12 +1,13 @@
 # Counter (SPA, React-Redux)
+
+## [View The App](https://denisloza.github.io/Counter_withRedux/)
+
 ### Program features:
 - setting start and end number
 - resetting the counter to the initial position
 - blocking the increment button when the maximum value is reached
 - protection against setting the minimum value greater than the maximum
 - display errors and values ​​on a separate screen
-
-[View The App](https://denisloza.github.io/Counter_withRedux/)
 
 ### Based on:
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
