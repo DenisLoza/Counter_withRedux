@@ -6,6 +6,8 @@
 - protection against setting the minimum value greater than the maximum
 - display errors and values ​​on a separate screen
 
+[View The App](https://denisloza.github.io/Counter_withRedux/)
+
 ### Based on:
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
